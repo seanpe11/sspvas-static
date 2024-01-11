@@ -292,6 +292,43 @@
         </div>
       </div>
     </footer>
+    <script>
+          document.getElementById('quote').addEventListener('submit', function(event) {
+          event.preventDefault();
+
+          const formData = new FormData(this)
+
+          const data = {};
+          for (const [key, value] of formData.entries()) {
+            data[key] = value;
+          }
+
+          // Convert the data object into a URL encoded string
+          const urlEncodedData = new URLSearchParams(data).toString();
+
+          // Making the Fetch request
+          fetch('https://seanpe-com.vercel.app/api/sspvas_email', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              body: urlEncodedData
+          })
+          .then(response => {
+            console.log(response)
+            if(response.ok){
+              document.getElementById("submitStatus").innerHTML = "Your email has been sent. You can reach us for additional concerns at support@sspvas.com"
+            } else {
+              document.getElementById("submitStatus").innerHTML = "Error. You can try to reach us at support@sspvas.com"
+            }
+          })
+          .catch(error => {
+              // Handle errors here
+              document.getElementById("submitStatus").innerHTML = "Error. You can try to reach us at support@sspvas.com"
+          });
+
+      });
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
